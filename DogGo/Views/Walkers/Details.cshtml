@@ -1,4 +1,4 @@
-﻿@model DogGo.Models.Walker
+﻿@model DogGo.Models.ViewModels.WalkerProfileViewModel;
 
 @{
     ViewData["Title"] = "Details";
@@ -11,32 +11,41 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => model.Walker.Id)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Id)
+            @Html.DisplayFor(model => model.Walker.Id)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Walker.Name)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Walker.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Neighborhood)
+            @Html.DisplayNameFor(model => model.Walker.Neighborhood)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Neighborhood.Name)
+            @Html.DisplayFor(model => model.Walker.Neighborhood.Name)
         </dd>
         <dt class="col-sm-2">
             Image
         </dt>
         <dd class="col-sm-10">
-            <img class="bg-info" src="@Model.ImageUrl" alt="avatar" />
+            <img class="bg-info" src="@Model.Walker.ImageUrl" alt="avatar" />
         </dd>
     </dl>
 </div>
+
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    <h4>Walks</h4>
+    @foreach (Walk walk in Model.Walks)
+    {
+        <p>@walk.Duration</p>;
+    }
+</div>
+
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Walker.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DogGo.Models
 {
@@ -10,5 +11,7 @@ namespace DogGo.Models
         public string ImageUrl { get; set; }
         public Neighborhood Neighborhood { get; set; }
         public List<Dog> Dogs { get; set; }
+        List<Walk> Walks { get; set; }
+        public TimeSpan TotalTime { get; set; }
     }
 }

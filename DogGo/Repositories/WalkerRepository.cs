@@ -60,7 +60,9 @@ namespace DogGo.Repositories
             }
         }
 
-        public Walker GetWalkerById(int id)
+
+
+        public List<Walker> GetWalkersInNeighborhood(int neighborhoodId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -68,7 +70,47 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                                        SELECT Walker.Id as walkerId, Walker.Name as walkerName, ImageUrl, n.Name as neighborhoodName
+                SELECT Id, [Name], ImageUrl, NeighborhoodId
+                FROM Walker
+                WHERE NeighborhoodId = @neighborhoodId
+            ";
+
+                    cmd.Parameters.AddWithValue("@neighborhoodId", neighborhoodId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        List<Walker> walkers = new List<Walker>();
+                        while (reader.Read())
+                        {
+                            Walker walker = new Walker
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
+                                NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            };
+
+                            walkers.Add(walker);
+                        }
+
+                        return walkers;
+                    }
+                }
+            }
+        }
+
+
+
+
+        public Walker GetWalkerById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Walker.Id as walkerId, Walker.Name as walkerName, ImageUrl, n.Name as neighborhoodName
                             FROM Walker
                             join Neighborhood n ON n.Id = Walker.NeighborhoodId
                             WHERE Walker.Id = @id";
