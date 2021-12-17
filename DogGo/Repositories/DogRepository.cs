@@ -82,7 +82,8 @@ namespace DogGo.Repositories
                     cmd.CommandText = @"
                                         SELECT d.Id as dogId, d.Name as dogName, Breed, Notes, ImageUrl, o.Name as ownerName, o.Id as ownerId
                                         FROM Dog as d
-                                        JOIN Owner o ON o.Id = d.OwnerId";
+                                        JOIN Owner o ON o.Id = d.OwnerId
+                                        WHERE d.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
