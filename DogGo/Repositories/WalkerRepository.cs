@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
+using DogGo.Repositories;
 
 namespace DogGo.Repositories
 {
@@ -110,10 +111,12 @@ namespace DogGo.Repositories
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Walker.Id as walkerId, Walker.Name as walkerName, ImageUrl, n.Name as neighborhoodName
-                            FROM Walker
-                            join Neighborhood n ON n.Id = Walker.NeighborhoodId
-                            WHERE Walker.Id = @id";
+                    cmd.CommandText = @"
+                        SELECT Walker.Id as walkerId, Walker.Name as walkerName, ImageUrl, n.Name as neighborhoodName
+                        FROM Walker
+                        join Neighborhood n on n.Id = Walker.NeighborhoodId
+                        WHERE Walker.Id = @id
+                    ";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -143,6 +146,8 @@ namespace DogGo.Repositories
             }
         }
 
-       
+
+
+
     }
 }

@@ -10,6 +10,6 @@ namespace DogGo.Models
         public DateTime Date { get; set; }
         public int Duration { get; set; }
         public Dog Dog { get; set; }
-
+        public object Owner { get; internal set; }
     }
 }
